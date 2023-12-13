@@ -75,7 +75,8 @@ void UsbGamepad::setAnalogThumbY(bool isLeft, int8_t y)
 
 void UsbGamepad::setAnalogTrigger(bool isLeft, int8_t z)
 {
-  z = limit_value(z, MIN_ANALOG_VALUE, MAX_ANALOG_VALUE);
+  z = (limit_value(z, MIN_ANALOG_VALUE, MAX_ANALOG_VALUE) + 127) / 2;
+  // ^ This fixes the ratios of trigers on Windows + breaks the LED a little bit (but in a good way, cause it's less annoying)
   int8_t lastZ = 0;
   if (isLeft)
   {
